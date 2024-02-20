@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    container_name: geo-polygons-postgres
+    image: geo-polygons-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: geo-polygons
+    ports:
+      - "5432:5432"
+    networks:
+      - net-geo-polygons-symfony
+
+  geo-polygons-symfony-back:
+    container_name: geo-polygons-symfony-back
+    image: geo-polygons-symfony-back
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        PHP_VERSION: '8.2.4-fpm-bullseye'
+    volumes:
+      - ./:/var/www/geo-polygons-symfony
+      - ./docker/nginx/sites:/etc/nginx/sites-available
+    ports:
+      - "9000:80" #http
+      - "443:443" #https
+    networks:
+      - net-geo-polygons-symfony
+
+volumes:
+  geo-polygons-symfony-back:
+networks:
+  net-geo-polygons-symfony:
+    driver: bridge

@@ -59,3 +59,6 @@ After finishing the creation of the containers, we must execute the commands bel
 docker exec -it geo-polygons-symfony-back php bin/console doctrine:migrations:migrate --no-interaction
 ```
 2. Used to populate the tables (Required):
+```
+docker exec -it geo-polygons-symfony-back php bin/console doctrine:fixtures:load --no-interaction
+```

@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\UserPoint;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @extends ServiceEntityRepository<UserPoint>
@@ -16,9 +18,30 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserPointRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        EntityManagerInterface $entityManager
+    )
     {
         parent::__construct($registry, UserPoint::class);
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function storeManually(array $parameters)
+    {
+        $sql = "INSERT INTO user_point (municipal_id, longitude, latitude, geom, created_at, updated_at) VALUES(:municipal_id, :longitude, :latitude, ST_MakePolygon(ST_GeomFromText(:polygon)), :created_at, :updated_at)";
+
+        try {
+            $this->entityManager->getConnection()->executeQuery($sql,$parameters);
+            return 'ok';
+        } catch (Exception $e) {
+            throw new Exception('Ops, User Point not saved.');
+        }
     }
 
 //    /**

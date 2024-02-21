@@ -4,7 +4,6 @@ TerraQ - Backend test. This test was created to assess your skills in developing
 that integrates geospatial functionalities. The goal is to create an API that interacts with a
 PostgreSQL database with the PostGIS extension, providing endpoints for the manipulation and querying
 of geospatial data.
-Created some items like Contracts, Seeders, Dependency Injection, Docker in Laravel 10.
 
 
 ## Objectives:

@@ -45,9 +45,14 @@ After downloading the **geo-polygons-symfony** repository, being in its main fol
 ```sh 
 docker-compose build --no-cache
 ```
-2) After building the containers, execute the command below to start it.
+2) After building the containers, execute the command below to start it:
 ```sh 
 docker-compose up -d
+```
+
+3) Install the dependencies with Composer.
+```sh 
+docker exec geo-polygons-symfony-back composer install
 ```
 
 After finishing the creation of the containers, we must execute the commands below so that the environment is ready to be used:

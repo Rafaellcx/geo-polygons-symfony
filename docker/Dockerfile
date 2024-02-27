@@ -48,7 +48,6 @@ RUN chown www-data:www-data $APP_DIR
 #RUN echo "<?php echo 'Minha Aplicação'; ?>" > public/index.php
 #COPY --chown=www-data:www-data ./back-lunch .
 RUN rm -rf vendor
-RUN composer install --no-interaction
 
 RUN apt-get install nginx -y
 RUN rm -rf /etc/nginx/sites-enabled/* && rm -rf /etc/nginx/sites-available/*
